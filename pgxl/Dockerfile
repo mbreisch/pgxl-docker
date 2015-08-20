@@ -31,7 +31,7 @@ ENV LC_ALL fr_FR.UTF-8
 ### PGXL
 
 WORKDIR /root
-RUN git clone https://github.com/postmind-net/postgres-xl.git pgxl --depth 1
+RUN git clone https://github.com/mbreisch/postgres-xl.git pgxl --depth 1
 WORKDIR /root/pgxl
 RUN ./configure --with-python --prefix /opt/pgxl
 # ./configure --enable-cassert --enable-debug CFLAGS="-ggdb -Og -fno-omit-frame-pointer" --with-python --prefix /opt/pgxl
