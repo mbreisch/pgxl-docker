@@ -20,13 +20,6 @@ RUN apt-get install -y curl flex bison zlib1g-dev libreadline6-dev gcc make supe
 RUN apt-get install -y python-dev
 RUN apt-get install -y pgxnclient
 
-### LOCALE
-
-RUN apt-get install -y locales && localedef -i fr_FR -c -f UTF-8 -A /usr/share/locale/locale.alias fr_FR.UTF-8
-RUN locale-gen fr_FR.UTF-8
-ENV LANG fr_FR.UTF-8
-ENV LANGUAGE fr_FR:fr
-ENV LC_ALL fr_FR.UTF-8
 
 ### PGXL
 
