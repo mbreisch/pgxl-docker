@@ -18,15 +18,27 @@ RUN apt-get install -y software-properties-common
 RUN apt-get install -y curl flex bison zlib1g-dev libreadline6-dev gcc make supervisor git \
                     openssh-server openssh-client rsync
 RUN apt-get install -y python-dev
+RUN apt-get install -y zlib1g-dev libssl-dev libxml2-dev libxml++2.6-dev libxmltok1-dev libxslt1-dev libperl-dev libgettextpo-dev gettext libossp-uuid-dev
+
 RUN apt-get install -y pgxnclient
 
+### LOCALE
+
+RUN apt-get install -y locales
+# Default
+RUN localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+RUN locale-gen en_US.UTF-8
+
+ENV LANGUAGE en_US:en
+ENV LANG en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
 
 ### PGXL
 
 WORKDIR /root
 RUN git clone https://github.com/mbreisch/postgres-xl.git pgxl --depth 1
 WORKDIR /root/pgxl
-RUN ./configure --with-python --prefix /opt/pgxl
+RUN ./configure --with-python --prefix /opt/pgxl --with-openssl --with-libxml --with-libxslt --with-zlib --with-perl --enable-nls --with-ossp-uuid
 # ./configure --enable-cassert --enable-debug CFLAGS="-ggdb -Og -fno-omit-frame-pointer" --with-python --prefix /opt/pgxl
 RUN make -j 4
 WORKDIR /root/pgxl/contrib

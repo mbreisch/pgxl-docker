@@ -189,13 +189,15 @@ listen stats 0.0.0.0:9000
     mode http
     stats uri /stats
 
-listen PGSQL 0.0.0.0:5432
+listen PGSQL
+    bind 0.0.0.0:5432
+    bind :::5432
     mode tcp
     option tcplog
     balance static-rr
 """)
 
-    for i in range(1, len(ips)):
+    for i in range(0, len(ips)):
         conf.write("""    server s%d %s:5432 check\n""" %(i, ips[i]))
     return conf
 
